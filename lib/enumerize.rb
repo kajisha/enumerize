@@ -15,11 +15,13 @@ module Enumerize
   autoload :ActiveRecordSupport, 'enumerize/activerecord'
   autoload :SequelSupport, 'enumerize/sequel'
   autoload :MongoidSupport,      'enumerize/mongoid'
+  autoload :Neo4jSupport, 'enumerize/neo4j'
 
   module Scope
     autoload :ActiveRecord, 'enumerize/scope/activerecord'
     autoload :Sequel, 'enumerize/scope/sequel'
     autoload :Mongoid,      'enumerize/scope/mongoid'
+    autoload :Neo4j, 'enumerize/scope/neo4j'
   end
 
   def self.included(base)
@@ -44,6 +46,11 @@ module Enumerize
     if defined?(::Sequel::Model)
       base.extend Enumerize::SequelSupport
       base.extend Enumerize::Scope::Sequel
+    end
+
+    if defined?(::Neo4j::ActiveNode) || defined?(::Neo4j::ActiveRel)
+      base.extend Enumerize::Neo4jSupport
+      base.extend Enumerize::Scope::Neo4j
     end
 
     if defined?(::RailsAdmin)
