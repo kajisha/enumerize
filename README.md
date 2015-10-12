@@ -78,6 +78,18 @@ class User
 end
 ```
 
+Neo4jrb:
+
+```ruby
+class User
+  include Neo4j::ActiveNode
+  extend Enumerize
+
+  property :role
+  enumerize :role, in: [:user, :admin], default: :user
+end
+```
+
 I18n:
 
 ```ruby
