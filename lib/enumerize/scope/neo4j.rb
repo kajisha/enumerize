@@ -5,7 +5,7 @@ module Enumerize
         super
 
         _enumerize_module.dependent_eval do
-          if self.kind_of?(::Neo4j::ActiveNode) || self.kind_of(::Neo4j::ActiveRel)
+          if self.include?(::Neo4j::ActiveNode) || self.include?(::Neo4j::ActiveRel)
             if options[:scope]
               _define_neo4j_scope_methods!(name, options)
             end
